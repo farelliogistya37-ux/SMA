@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMA Favorit di Kediri</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+                url("https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1200&q=60");
+            background-size: cover;
+            background-position: center;
+            padding: 90px 20px;
+            color: white;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 45px;
+            margin-bottom: 10px;
+            text-shadow: 2px 3px 12px rgba(0,0,0,0.6);
+        }
+
+        header p {
+            font-size: 18px;
+        }
+
+        /* Search */
+        .container {
+            width: 90%;
+            margin: auto;
+            margin-top: -40px;
+        }
+
+        #search {
+            width: 100%;
+            padding: 15px;
+            border-radius: 40px;
+            font-size: 17px;
+            border: none;
+            outline: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* GRID */
+        .grid {
+            margin-top: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+            overflow: hidden;
+            transition: 0.3s;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 22px rgba(0,0,0,0.22);
+        }
+
+        .card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 22px;
+            color: #1a4b8c;
+        }
+
+        .lokasi {
+            margin: 5px 0;
+            color: #666;
+            font-size: 15px;
+        }
+
+        .desc {
+            margin-top: 8px;
+            font-size: 14px;
+            color: #444;
+            line-height: 1.5;
+        }
+
+        footer {
+            margin-top: 40px;
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
+</head>
+<body>
+
+<header>
+    <h1>SMA Favorit di Kediri</h1>
+    <p>Daftar sekolah menengah atas terbaik di Kediri dengan kualitas pendidikan unggulan.</p>
+</header>
+
+<div class="container">
+    <input type="text" id="search" placeholder="Cari nama sekolah atau lokasi..." onkeyup="searchSMA()">
+
+    <div id="smaList" class="grid"></div>
+</div>
+
+<footer>
+    © 2025 Info Pendidikan Kediri — SMA Unggulan
+</footer>
+
+<script>
+    // DATA SMA FAVORIT DI KEDIRI
+    const smaData = [
+        {
+            nama: "SMA Negeri 1 Kediri",
+            lokasi: "Kediri Kota",
+            gambar: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=900&q=60",
+            deskripsi: "Sekolah favorit dengan prestasi akademik tinggi, fasilitas modern, dan lingkungan belajar kondusif."
+        },
+        {
+            nama: "SMA Negeri 2 Kediri",
+            lokasi: "Kediri Kota",
+            gambar: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=60",
+            deskripsi: "Dikenal dengan kedisiplinan dan kualitas pembelajaran yang unggul serta kegiatan ekstrakurikuler aktif."
+        },
+        {
+            nama: "SMA Negeri 3 Kediri",
+            lokasi: "Mojoroto, Kediri",
+            gambar: "https://images.unsplash.com/photo-1511296265585-5a8b81b9aa65?auto=format&fit=crop&w=900&q=60",
+            deskripsi: "Memiliki program pengembangan diri yang kuat dan tenaga pendidik profesional."
+        },
+        {
+            nama: "SMA Katolik ST. Louis Kediri",
+            lokasi: "Kediri Kota",
+            gambar: "https://images.unsplash.com/photo-1596496398470-0f8b9c35d1ad?auto=format&fit=crop&w=900&q=60",
+            deskripsi: "Sekolah swasta favorit dengan prestasi akademik dan non-akademik yang konsisten."
+        },
+        {
+            nama: "SMA Muhammadiyah 1 Kediri",
+            lokasi: "Kediri Kota",
+            gambar: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&w=900&q=60",
+            deskripsi: "Unggul dalam pendidikan karakter dan ekstrakurikuler yang beragam."
+        },
+        {
+            nama: "SMA Pawyatan Daha 2 Kediri",
+            lokasi: "Kediri Kota",
+            gambar: "https://images.unsplash.com/photo-1601582580567-c0f5f3d8e9d1?auto=format&fit=crop&w=900&q=60",
+            deskripsi: "Sekolah swasta populer dengan fasilitas lengkap dan berbagai program unggulan."
+        }
+    ];
+
+    const list = document.getElementById("smaList");
+
+    function renderData(data) {
+        list.innerHTML = "";
+        data.forEach(s => {
+            list.innerHTML += `
+                <div class="card">
+                    <img src="${s.gambar}" alt="${s.nama}">
+                    <div class="card-content">
+                        <h3>${s.nama}</h3>
+                        <p class="lokasi">📍 ${s.lokasi}</p>
+                        <p class="desc">${s.deskripsi}</p>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    renderData(smaData);
+
+    function searchSMA() {
+        const keyword = document.getElementById("search").value.toLowerCase();
+        const hasil = smaData.filter(s =>
+            s.nama.toLowerCase().includes(keyword) ||
+            s.lokasi.toLowerCase().includes(keyword)
+        );
+        renderData(hasil);
+    }
+</script>
+
+</body>
+</html>
